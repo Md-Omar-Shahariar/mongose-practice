@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-import app from "./route";
+import app from "./app";
 
 const port = 50000; // default port to listen
 
 async function main() {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/test");
+    await mongoose.connect("mongodb://127.0.0.1:27017/practice-mongose");
     app.listen(port, () => {
       console.log(`Example app listening on port ${port}`);
     });
