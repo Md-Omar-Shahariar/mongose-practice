@@ -11,3 +11,8 @@ export const getUserFromDB = async (): Promise<IUser[]> => {
   const user = User.find({});
   return user;
 };
+
+export const getUserByIdFromDB = async (id: string): Promise<IUser | null> => {
+  const user = User.findOne({ id: id }, { name: 1, role: 1, _id: 0 });
+  return user;
+};

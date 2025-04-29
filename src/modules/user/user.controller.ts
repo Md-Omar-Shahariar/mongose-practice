@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { createUserToDB, getUserFromDB } from "./user.service";
+import {
+  createUserToDB,
+  getUserByIdFromDB,
+  getUserFromDB,
+} from "./user.service";
 
 export const createUser = async (
   req: Request,
@@ -33,6 +37,29 @@ export const getUser = async (
       data: user,
     });
     next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      // check if id is provided
+      res.status(400).json({ status: "Failed" });
+    } else {
+      const user = await getUserByIdFromDB(id);
+      res.status(200).json({
+        status: "success",
+        data: user,
+      });
+      next();
+    }
   } catch (error) {
     console.log(error);
   }
