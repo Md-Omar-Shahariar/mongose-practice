@@ -14,5 +14,9 @@ export const getUserFromDB = async (): Promise<IUser[]> => {
 
 export const getUserByIdFromDB = async (id: string): Promise<IUser | null> => {
   const user = User.findOne({ id: id }, { name: 1, role: 1, _id: 0 });
+  const user1 = new User({
+    name: { firstName: "po", lastName: "Doe", middleName: "Smith" },
+  });
+  console.log(user1.getFullName());
   return user;
 };

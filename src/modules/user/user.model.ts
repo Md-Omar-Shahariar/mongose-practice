@@ -1,7 +1,9 @@
-import { model, Schema } from "mongoose";
-import { IUser } from "./user.interface";
+import { Model, model, Schema } from "mongoose";
+import { IUser, IUserMethods } from "./user.interface";
 
-const userSchema = new Schema<IUser>({
+type IUserModel = Model<IUser, {}, IUserMethods>;
+
+const userSchema = new Schema<IUser, IUserModel, IUserMethods>({
   name: {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
@@ -19,4 +21,8 @@ const userSchema = new Schema<IUser>({
   gender: { type: String, enum: ["male", "female"], required: true },
 });
 
-export const User = model<IUser>("User", userSchema);
+userSchema.method("getFullName", function () {
+  return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
+});
+
+export const User = model<IUser, IUserModel>("User", userSchema);
